@@ -1,0 +1,55 @@
+<script>
+// sort int array
+int[] intArray = new int[5] { 8, 10, 2, 6, 3 };
+Array.Sort(intArray);
+// write array
+foreach (int i in intArray) Console.Write(i + " ");  // output: 2 3 6 8 10
+
+
+
+
+// sort string array
+string[] stringArray = new string[5] { "X", "B", "Z", "Y", "A" };
+Array.Sort(stringArray);
+// write array
+foreach (string str in stringArray) Console.Write(str + " "); // output: A B X Y Z
+
+// array of custom type
+User[] users = new User[3] { new User("Seth", 33),  // name, age
+                             new User("Michael", 35),
+                             new User("Harden", 25) };
+
+
+// sort array by name
+Array.Sort(users, delegate(User user1, User user2) {
+                    return user1.Name.CompareTo(user2.Name);
+                  });
+// write array (output: Betty23 Lisa25 Susan20)
+foreach (User user in users) Console.Write(user.Name + user.Age + " ");
+
+
+// sort array by age
+Array.Sort(users, delegate(User user1, User user2) {
+                    return user1.Age.CompareTo(user2.Age); // (user1.Age - user2.Age)
+                  });
+// write array (output: Susan20 Betty23 Lisa25)
+foreach (User user in users) Console.Write(user.Name + user.Age + " ");
+// custom type
+public class User : IComparable
+{
+  // ...
+
+  // implement IComparable interface
+  public int CompareTo(object obj)
+  {
+    if (obj is User) {
+      return this.Name.CompareTo((obj as User).Name);  // compare user names
+    }
+    throw new ArgumentException("Object is not a User");
+  }
+}
+
+// sort using IComparable implemented by User class
+Array.Sort(users);  // sort array of User objects
+
+</scirpt>
